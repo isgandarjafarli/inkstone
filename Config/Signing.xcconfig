@@ -1,0 +1,11 @@
+// Inkstone signing settings.
+//
+// Apple needs every app on a phone to have its own ID. If Xcode says the ID is
+// already taken, change the last word below to anything else (letters and
+// numbers only), for example app.inkstone.maria2026, and build again.
+INKSTONE_BUNDLE_PREFIX = app.inkstone.hanzi7q4k
+
+// The shared folder the app and its widgets both read. It does not need to match the
+// line above. If you change it, change it in Inkstone.entitlements and
+// InkstoneWidget.entitlements too.
+INKSTONE_APP_GROUP = group.app.inkstone.hanzi7q4k
