@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		A1B2C3D4E5F600000000001E /* InkstoneWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F600000000000A /* InkstoneWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		A1B2C3D4E5F6000000000042 /* InkstoneWatch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6000000000032 /* InkstoneWatch.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		A1B2C3D4E5F6000000000043 /* InkstoneWatchWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6000000000033 /* InkstoneWatchWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -25,6 +27,20 @@
 			remoteGlobalIDString = A1B2C3D4E5F6000000000011;
 			remoteInfo = Inkstone;
 		};
+		A1B2C3D4E5F6000000000045 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A1B2C3D4E5F6000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A1B2C3D4E5F6000000000038;
+			remoteInfo = InkstoneWatch;
+		};
+		A1B2C3D4E5F6000000000047 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A1B2C3D4E5F6000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A1B2C3D4E5F6000000000039;
+			remoteInfo = InkstoneWatchWidget;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -35,6 +51,28 @@
 			dstSubfolderSpec = 13;
 			files = (
 				A1B2C3D4E5F600000000001E /* InkstoneWidget.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A1B2C3D4E5F6000000000041 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				A1B2C3D4E5F6000000000042 /* InkstoneWatch.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A1B2C3D4E5F600000000003D /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				A1B2C3D4E5F6000000000043 /* InkstoneWatchWidget.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -50,7 +88,42 @@
 		A1B2C3D4E5F600000000000E /* Inkstone.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Inkstone.entitlements; sourceTree = "<group>"; };
 		A1B2C3D4E5F600000000000F /* InkstoneWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = InkstoneWidget.entitlements; sourceTree = "<group>"; };
 		A1B2C3D4E5F6000000000010 /* Signing.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Signing.xcconfig; sourceTree = "<group>"; };
+		A1B2C3D4E5F6000000000032 /* InkstoneWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InkstoneWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A1B2C3D4E5F6000000000033 /* InkstoneWatchWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = InkstoneWatchWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		A1B2C3D4E5F6000000000034 /* Watch-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Watch-Info.plist"; sourceTree = "<group>"; };
+		A1B2C3D4E5F6000000000035 /* WatchWidget-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "WatchWidget-Info.plist"; sourceTree = "<group>"; };
+		A1B2C3D4E5F6000000000036 /* InkstoneWatch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = InkstoneWatch.entitlements; sourceTree = "<group>"; };
+		A1B2C3D4E5F6000000000037 /* InkstoneWatchWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = InkstoneWatchWidget.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		A1B2C3D4E5F600000000004A /* Exceptions for "Shared" folder in "InkstoneWidget" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Resources/strokes.pack,
+			);
+			target = A1B2C3D4E5F6000000000012 /* InkstoneWidget */;
+		};
+		A1B2C3D4E5F600000000004B /* Exceptions for "Shared" folder in "InkstoneWatch" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Widgets/WidgetEntries.swift,
+				Widgets/WidgetIntents.swift,
+				Widgets/WidgetViews.swift,
+			);
+			target = A1B2C3D4E5F6000000000038 /* InkstoneWatch */;
+		};
+		A1B2C3D4E5F600000000004C /* Exceptions for "Shared" folder in "InkstoneWatchWidget" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Resources/strokes.pack,
+				Widgets/WidgetEntries.swift,
+				Widgets/WidgetIntents.swift,
+				Widgets/WidgetViews.swift,
+			);
+			target = A1B2C3D4E5F6000000000039 /* InkstoneWatchWidget */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		A1B2C3D4E5F6000000000005 /* App */ = {
@@ -60,6 +133,11 @@
 		};
 		A1B2C3D4E5F6000000000006 /* Shared */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				A1B2C3D4E5F600000000004A /* Exceptions for "Shared" folder in "InkstoneWidget" target */,
+				A1B2C3D4E5F600000000004B /* Exceptions for "Shared" folder in "InkstoneWatch" target */,
+				A1B2C3D4E5F600000000004C /* Exceptions for "Shared" folder in "InkstoneWatchWidget" target */,
+			);
 			path = Shared;
 			sourceTree = "<group>";
 		};
@@ -71,6 +149,21 @@
 		A1B2C3D4E5F6000000000008 /* Tests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Tests;
+			sourceTree = "<group>";
+		};
+		A1B2C3D4E5F600000000002F /* Watch */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Watch;
+			sourceTree = "<group>";
+		};
+		A1B2C3D4E5F6000000000030 /* WatchShared */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = WatchShared;
+			sourceTree = "<group>";
+		};
+		A1B2C3D4E5F6000000000031 /* WatchWidget */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = WatchWidget;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -97,6 +190,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A1B2C3D4E5F600000000003B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A1B2C3D4E5F600000000003F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -106,6 +213,9 @@
 				A1B2C3D4E5F6000000000005 /* App */,
 				A1B2C3D4E5F6000000000006 /* Shared */,
 				A1B2C3D4E5F6000000000007 /* Widget */,
+				A1B2C3D4E5F600000000002F /* Watch */,
+				A1B2C3D4E5F6000000000031 /* WatchWidget */,
+				A1B2C3D4E5F6000000000030 /* WatchShared */,
 				A1B2C3D4E5F6000000000008 /* Tests */,
 				A1B2C3D4E5F6000000000004 /* Config */,
 				A1B2C3D4E5F6000000000003 /* Products */,
@@ -120,6 +230,10 @@
 				A1B2C3D4E5F600000000000D /* Widget-Info.plist */,
 				A1B2C3D4E5F600000000000E /* Inkstone.entitlements */,
 				A1B2C3D4E5F600000000000F /* InkstoneWidget.entitlements */,
+				A1B2C3D4E5F6000000000034 /* Watch-Info.plist */,
+				A1B2C3D4E5F6000000000035 /* WatchWidget-Info.plist */,
+				A1B2C3D4E5F6000000000036 /* InkstoneWatch.entitlements */,
+				A1B2C3D4E5F6000000000037 /* InkstoneWatchWidget.entitlements */,
 			);
 			path = Config;
 			sourceTree = "<group>";
@@ -130,6 +244,8 @@
 				A1B2C3D4E5F6000000000009 /* Inkstone.app */,
 				A1B2C3D4E5F600000000000A /* InkstoneWidget.appex */,
 				A1B2C3D4E5F600000000000B /* InkstoneTests.xctest */,
+				A1B2C3D4E5F6000000000032 /* InkstoneWatch.app */,
+				A1B2C3D4E5F6000000000033 /* InkstoneWatchWidget.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -145,11 +261,13 @@
 				A1B2C3D4E5F6000000000015 /* Frameworks */,
 				A1B2C3D4E5F6000000000016 /* Resources */,
 				A1B2C3D4E5F6000000000017 /* Embed Foundation Extensions */,
+				A1B2C3D4E5F6000000000041 /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				A1B2C3D4E5F600000000001F /* PBXTargetDependency */,
+				A1B2C3D4E5F6000000000044 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				A1B2C3D4E5F6000000000005 /* App */,
@@ -208,6 +326,56 @@
 			productReference = A1B2C3D4E5F600000000000B /* InkstoneTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		A1B2C3D4E5F6000000000038 /* InkstoneWatch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A1B2C3D4E5F6000000000048 /* Build configuration list for PBXNativeTarget "InkstoneWatch" */;
+			buildPhases = (
+				A1B2C3D4E5F600000000003A /* Sources */,
+				A1B2C3D4E5F600000000003B /* Frameworks */,
+				A1B2C3D4E5F600000000003C /* Resources */,
+				A1B2C3D4E5F600000000003D /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A1B2C3D4E5F6000000000046 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				A1B2C3D4E5F600000000002F /* Watch */,
+				A1B2C3D4E5F6000000000030 /* WatchShared */,
+				A1B2C3D4E5F6000000000006 /* Shared */,
+			);
+			name = InkstoneWatch;
+			packageProductDependencies = (
+			);
+			productName = InkstoneWatch;
+			productReference = A1B2C3D4E5F6000000000032 /* InkstoneWatch.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A1B2C3D4E5F6000000000039 /* InkstoneWatchWidget */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A1B2C3D4E5F6000000000049 /* Build configuration list for PBXNativeTarget "InkstoneWatchWidget" */;
+			buildPhases = (
+				A1B2C3D4E5F600000000003E /* Sources */,
+				A1B2C3D4E5F600000000003F /* Frameworks */,
+				A1B2C3D4E5F6000000000040 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				A1B2C3D4E5F6000000000031 /* WatchWidget */,
+				A1B2C3D4E5F6000000000030 /* WatchShared */,
+				A1B2C3D4E5F6000000000006 /* Shared */,
+			);
+			name = InkstoneWatchWidget;
+			packageProductDependencies = (
+			);
+			productName = InkstoneWatchWidget;
+			productReference = A1B2C3D4E5F6000000000033 /* InkstoneWatchWidget.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -228,6 +396,12 @@
 						CreatedOnToolsVersion = 16.0;
 						TestTargetID = A1B2C3D4E5F6000000000011;
 					};
+					A1B2C3D4E5F6000000000038 = {
+						CreatedOnToolsVersion = 16.0;
+					};
+					A1B2C3D4E5F6000000000039 = {
+						CreatedOnToolsVersion = 16.0;
+					};
 				};
 			};
 			buildConfigurationList = A1B2C3D4E5F6000000000023 /* Build configuration list for PBXProject "Inkstone" */;
@@ -247,6 +421,8 @@
 				A1B2C3D4E5F6000000000011 /* Inkstone */,
 				A1B2C3D4E5F6000000000012 /* InkstoneWidget */,
 				A1B2C3D4E5F6000000000013 /* InkstoneTests */,
+				A1B2C3D4E5F6000000000038 /* InkstoneWatch */,
+				A1B2C3D4E5F6000000000039 /* InkstoneWatchWidget */,
 			);
 		};
 /* End PBXProject section */
@@ -267,6 +443,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		A1B2C3D4E5F600000000001D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A1B2C3D4E5F600000000003C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A1B2C3D4E5F6000000000040 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -297,6 +487,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A1B2C3D4E5F600000000003A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A1B2C3D4E5F600000000003E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -309,6 +513,16 @@
 			isa = PBXTargetDependency;
 			target = A1B2C3D4E5F6000000000011 /* Inkstone */;
 			targetProxy = A1B2C3D4E5F6000000000022 /* PBXContainerItemProxy */;
+		};
+		A1B2C3D4E5F6000000000044 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A1B2C3D4E5F6000000000038 /* InkstoneWatch */;
+			targetProxy = A1B2C3D4E5F6000000000045 /* PBXContainerItemProxy */;
+		};
+		A1B2C3D4E5F6000000000046 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A1B2C3D4E5F6000000000039 /* InkstoneWatchWidget */;
+			targetProxy = A1B2C3D4E5F6000000000047 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -520,6 +734,116 @@
 			};
 			name = Release;
 		};
+		A1B2C3D4E5F600000000004D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Config/InkstoneWatch.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Config/Watch-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = Inkstone;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "$(INKSTONE_BUNDLE_PREFIX)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(INKSTONE_BUNDLE_PREFIX).watchkitapp";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Debug;
+		};
+		A1B2C3D4E5F600000000004E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Config/InkstoneWatch.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Config/Watch-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = Inkstone;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "$(INKSTONE_BUNDLE_PREFIX)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(INKSTONE_BUNDLE_PREFIX).watchkitapp";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Release;
+		};
+		A1B2C3D4E5F600000000004F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Config/InkstoneWatchWidget.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Config/WatchWidget-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = Inkstone;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(INKSTONE_BUNDLE_PREFIX).watchkitapp.widget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Debug;
+		};
+		A1B2C3D4E5F6000000000050 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Config/InkstoneWatchWidget.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Config/WatchWidget-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = Inkstone;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(INKSTONE_BUNDLE_PREFIX).watchkitapp.widget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -555,6 +879,24 @@
 			buildConfigurations = (
 				A1B2C3D4E5F600000000002D /* Debug */,
 				A1B2C3D4E5F600000000002E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A1B2C3D4E5F6000000000048 /* Build configuration list for PBXNativeTarget "InkstoneWatch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A1B2C3D4E5F600000000004D /* Debug */,
+				A1B2C3D4E5F600000000004E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A1B2C3D4E5F6000000000049 /* Build configuration list for PBXNativeTarget "InkstoneWatchWidget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A1B2C3D4E5F600000000004F /* Debug */,
+				A1B2C3D4E5F6000000000050 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

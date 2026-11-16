@@ -247,6 +247,93 @@ final class ProgressTests: XCTestCase {
     }
 }
 
+final class CompatibilityTests: XCTestCase {
+    /// A progress file written before a setting existed must still load, with the new setting at
+    /// its default, instead of failing and losing the learner's progress.
+    func testOlderProgressFilesLoadWithDefaults() throws {
+        var state = UserState()
+        state.cards[42] = FSRS().first(.good, today: 100)
+        state.settings.level = 3
+        var json = try JSONSerialization.jsonObject(with: JSONEncoder.inkstone.encode(state)) as! [String: Any]
+        var settings = json["settings"] as! [String: Any]
+        settings.removeValue(forKey: "toneHanzi")
+        settings["someFutureSetting"] = true
+        json["settings"] = settings
+        json.removeValue(forKey: "widgetOffset")
+        let data = try JSONSerialization.data(withJSONObject: json)
+        let loaded = try JSONDecoder.inkstone.decode(UserState.self, from: data)
+        XCTAssertEqual(loaded.settings.level, 3)
+        XCTAssertTrue(loaded.settings.toneHanzi)
+        XCTAssertEqual(loaded.widgetOffset, 0)
+        XCTAssertEqual(loaded.cards[42]?.reps, 1)
+    }
+
+    func testDamagedCardsFailInsteadOfLoadingEmpty() {
+        let data = Data(#"{"onboarded": true, "cards": {"1": {"oops": 1}}}"#.utf8)
+        XCTAssertThrowsError(try JSONDecoder.inkstone.decode(UserState.self, from: data))
+    }
+}
+
+final class WatchTests: XCTestCase {
+    func testFeedListsWhatTheWatchNeeds() {
+        var s = UserState()
+        let f = FSRS()
+        s.cards[1] = f.first(.good, today: 100)          // learning
+        var known = f.first(.good, today: 90)
+        known.mastered = true
+        s.cards[2] = known                               // known: not in the learning list
+        var due = f.first(.good, today: 95)
+        due.due = 100
+        s.cards[3] = due                                 // due today
+        s.plan = DailyPlan(day: 100, newWordIDs: [7, 8])
+        s.lists = [WordList(name: "Saved", wordIDs: [9])]
+        let feed = WatchFeed(state: s, today: 100, upcomingIDs: [10, 11])
+        XCTAssertEqual(feed.todayIDs, [7, 8])
+        XCTAssertTrue(feed.learningIDs.contains(1))
+        XCTAssertFalse(feed.learningIDs.contains(2))
+        XCTAssertEqual(feed.dueIDs, [3])
+        XCTAssertEqual(feed.allIDs, [1, 3, 7, 8, 9, 10, 11])
+        let round = try? JSONDecoder().decode(WatchFeed.self, from: JSONEncoder().encode(feed))
+        XCTAssertEqual(round, feed)
+    }
+
+    // The watch's word lists are not part of the iPhone app, so these run in the Linux check only.
+    #if !canImport(SwiftUI)
+    func testWatchPoolUsesThePhoneListsOrFallsBackToHSK1() {
+        let noPhone = WatchWords.pool(feed: nil, prefs: WatchPrefs(), today: 100, bundle: resources)
+        XCTAssertGreaterThan(noPhone.count, 50)
+        XCTAssertTrue(noPhone.allSatisfy { $0.levels["h26"] == 1 })
+
+        let words = WidgetFeed.loadWords(bundle: resources)
+        let ids = words.filter { $0.levels["h26"] == 2 }.prefix(5).map(\.id)
+        var s = UserState()
+        s.plan = DailyPlan(day: 100, newWordIDs: ids)
+        let feed = WatchFeed(state: s, today: 100, upcomingIDs: [])
+        var prefs = WatchPrefs()
+        prefs.source = .today
+        let pool = WatchWords.pool(feed: feed, prefs: prefs, today: 100, bundle: resources)
+        XCTAssertEqual(Set(pool.map(\.id)), Set(ids))
+        XCTAssertEqual(pool.map(\.id), WatchWords.pool(feed: feed, prefs: prefs, today: 100, bundle: resources).map(\.id),
+                       "stable within a day")
+    }
+
+    func testWatchPrefsSurviveNewFields() throws {
+        let data = Data(#"{"interval": 30}"#.utf8)
+        let p = try JSONDecoder().decode(WatchPrefs.self, from: data)
+        XCTAssertEqual(p.interval, 30)
+        XCTAssertEqual(p.source, .smart)
+    }
+    #endif
+
+    func testStrokePackReadsCharacters() throws {
+        let url = try XCTUnwrap(resources.url(forResource: "strokes", withExtension: "pack"))
+        let pack = try StrokePack(url: url)
+        XCTAssertTrue(pack.has("永"))
+        XCTAssertEqual(pack.strokes(for: "永")?.strokes.count, 5)
+        XCTAssertFalse(pack.has("A"))
+    }
+}
+
 #if canImport(SwiftUI)
 final class HandwritingTests: XCTestCase {
     func testMatchesItsOwnMedianAndRejectsReversedOrDistantStrokes() throws {

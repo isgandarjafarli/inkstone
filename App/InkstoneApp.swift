@@ -13,7 +13,13 @@ struct InkstoneApp: App {
         WindowGroup {
             RootView()
                 .environment(model)
-                .task { await model.loadLexicon() }
+                .task {
+                    await model.loadLexicon()
+                    #if DEBUG
+                    if ScreenshotMode.isActive { return }
+                    #endif
+                    WatchLink.shared.start(model: model)
+                }
                 .onOpenURL { handle($0) }
                 .onChange(of: scenePhase) { _, phase in
                     switch phase {

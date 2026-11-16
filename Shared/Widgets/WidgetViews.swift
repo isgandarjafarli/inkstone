@@ -17,6 +17,7 @@ struct WordWidgetView: View {
     private var w: WidgetWord { entry.word }
     /// Tone colours only make sense in full colour (not on the lock screen, tinted home screens or StandBy at night).
     private var colored: Bool { entry.toneColors && renderingMode == .fullColor }
+    private var coloredHanzi: Bool { entry.toneHanzi && renderingMode == .fullColor }
 
     var body: some View {
         Group {
@@ -131,7 +132,7 @@ struct WordWidgetView: View {
                 if !entry.level.isEmpty { levelTag }
             }
             Spacer(minLength: 4)
-            GridWord(text: w.hanzi, maxCell: 62)
+            GridWord(text: w.hanzi, pinyin: w.pinyin, colored: coloredHanzi, maxCell: 62)
                 .frame(maxWidth: .infinity)
                 .layoutPriority(1)
             Spacer(minLength: 4)
@@ -152,7 +153,7 @@ struct WordWidgetView: View {
     /// StandBy shows the small widget full screen without a background: let the word fill it.
     private var standBy: some View {
         VStack(spacing: 6) {
-            Text(w.hanzi)
+            toneText(w.hanzi, pinyin: w.pinyin, colored: coloredHanzi, base: .primary)
                 .font(Ink.hanziFixed(w.hanzi.count <= 2 ? 64 : 40))
                 .lineLimit(1)
                 .minimumScaleFactor(0.4)
@@ -173,7 +174,7 @@ struct WordWidgetView: View {
     private var medium: some View {
         HStack(alignment: .top, spacing: 14) {
             VStack(alignment: .leading, spacing: 0) {
-                GridWord(text: w.hanzi, maxCell: 58)
+                GridWord(text: w.hanzi, pinyin: w.pinyin, colored: coloredHanzi, maxCell: 58)
                     .layoutPriority(1)
                 Spacer(minLength: 6)
                 if entry.showPinyin {
@@ -226,7 +227,7 @@ struct WordWidgetView: View {
             }
             Spacer(minLength: 10)
             HStack(alignment: .bottom, spacing: 14) {
-                GridWord(text: w.hanzi, maxCell: 84)
+                GridWord(text: w.hanzi, pinyin: w.pinyin, colored: coloredHanzi, maxCell: 84)
                     .layoutPriority(1)
                 Spacer(minLength: 0)
             }
@@ -323,21 +324,24 @@ struct WordWidgetView: View {
 /// The squares grow to fill the space they are given, up to `maxCell`.
 struct GridWord: View {
     let text: String
+    var pinyin: String = ""
+    /// Colour each character by its tone.
+    var colored: Bool = false
     var maxCell: CGFloat = 64
     @Environment(\.widgetRenderingMode) private var renderingMode
 
     var body: some View {
         let chars = Array(text).map(String.init)
+        let colors: [Color?] = colored ? toneColorList(text, pinyin: pinyin) : chars.map { _ -> Color? in nil }
         if chars.count > 4 {
-            Text(text)
+            toneText(text, pinyin: pinyin, colored: colored)
                 .font(Ink.hanziFixed(40))
                 .lineLimit(1)
                 .minimumScaleFactor(0.4)
-                .foregroundStyle(Ink.ink)
                 .widgetAccentable()
         } else {
             HStack(spacing: -1) {
-                ForEach(Array(chars.enumerated()), id: \.offset) { _, c in
+                ForEach(Array(chars.enumerated()), id: \.offset) { i, c in
                     ZStack {
                         PracticeGrid(color: renderingMode == .fullColor ? Ink.seal : .primary)
                         Text(c)
@@ -345,7 +349,7 @@ struct GridWord: View {
                             .lineLimit(1)
                             .minimumScaleFactor(0.25)
                             .padding(maxCell * 0.06)
-                            .foregroundStyle(Ink.ink)
+                            .foregroundStyle(colors[i] ?? Ink.ink)
                             .widgetAccentable()
                     }
                     .frame(maxWidth: maxCell, maxHeight: maxCell)

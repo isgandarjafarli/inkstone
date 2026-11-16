@@ -20,7 +20,7 @@ struct WordDetailView: View {
             VStack(alignment: .leading, spacing: 20) {
                 // Head
                 VStack(spacing: 12) {
-                    ToneHanzi(hanzi: word.s, pinyin: word.p, size: word.s.count > 3 ? 56 : 84, colored: colored, relativeTo: .largeTitle)
+                    ToneHanzi(hanzi: word.s, pinyin: word.p, size: word.s.count > 3 ? 56 : 84, colored: model.state.settings.toneHanzi, relativeTo: .largeTitle)
                         .lineLimit(1).minimumScaleFactor(0.4)
                         .textSelection(.enabled)
                     PinyinText(pinyin: word.p, colored: colored, font: .title2.weight(.semibold))

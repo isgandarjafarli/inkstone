@@ -55,9 +55,8 @@ struct WordRow: View {
 
     var body: some View {
         HStack(spacing: 14) {
-            Text(word.s)
-                .font(Ink.hanzi(26, relativeTo: .title2))
-                .foregroundStyle(Ink.ink)
+            ToneHanzi(hanzi: word.s, pinyin: word.p, size: 26, colored: model.state.settings.toneHanzi, relativeTo: .title2)
+                .lineLimit(1)
                 .frame(minWidth: 44, alignment: .leading)
             VStack(alignment: .leading, spacing: 2) {
                 PinyinText(pinyin: word.p, colored: model.state.settings.toneColors, font: .subheadline.weight(.medium))
@@ -164,7 +163,7 @@ struct MiniWordCard: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack(alignment: .firstTextBaseline, spacing: 12) {
-                Text(word.s).font(Ink.hanzi(44, relativeTo: .largeTitle))
+                ToneHanzi(hanzi: word.s, pinyin: word.p, size: 44, colored: model.state.settings.toneHanzi, relativeTo: .largeTitle)
                 VStack(alignment: .leading, spacing: 2) {
                     PinyinText(pinyin: word.p, colored: model.state.settings.toneColors, font: .title3.weight(.semibold))
                     LevelBadge(level: word.displayLevel(in: model.state.settings.syllabus))

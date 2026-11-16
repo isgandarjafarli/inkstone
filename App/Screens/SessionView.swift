@@ -94,6 +94,7 @@ struct QuizItemView: View {
     @State private var writingDone = false
 
     private var colored: Bool { model.state.settings.toneColors }
+    private var coloredHanzi: Bool { model.state.settings.toneHanzi }
 
     var body: some View {
         VStack(spacing: 0) {
@@ -164,7 +165,7 @@ struct QuizItemView: View {
 
     private var bigWord: some View {
         VStack(spacing: 10) {
-            ToneHanzi(hanzi: word.s, pinyin: word.p, size: word.s.count > 3 ? 54 : 76, colored: colored && revealed, relativeTo: .largeTitle)
+            ToneHanzi(hanzi: word.s, pinyin: word.p, size: word.s.count > 3 ? 54 : 76, colored: coloredHanzi && revealed, relativeTo: .largeTitle)
                 .lineLimit(1).minimumScaleFactor(0.4)
             if revealed || model.state.settings.showPinyinFirst {
                 PinyinText(pinyin: word.p, colored: colored, font: .title2.weight(.semibold))
@@ -178,7 +179,7 @@ struct QuizItemView: View {
     private var learnContent: some View {
         VStack(alignment: .leading, spacing: 18) {
             VStack(spacing: 10) {
-                ToneHanzi(hanzi: word.s, pinyin: word.p, size: word.s.count > 3 ? 54 : 80, colored: colored, relativeTo: .largeTitle)
+                ToneHanzi(hanzi: word.s, pinyin: word.p, size: word.s.count > 3 ? 54 : 80, colored: coloredHanzi, relativeTo: .largeTitle)
                     .lineLimit(1).minimumScaleFactor(0.4)
                 PinyinText(pinyin: word.p, colored: colored, font: .title2.weight(.semibold))
                 HStack(spacing: 12) {

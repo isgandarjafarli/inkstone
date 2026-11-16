@@ -218,7 +218,7 @@ struct WordOfTheDayCard: View {
                 LevelBadge(level: word.displayLevel(in: model.state.settings.syllabus))
             }
             HStack(alignment: .center, spacing: 16) {
-                ToneHanzi(hanzi: word.s, pinyin: word.p, size: word.s.count > 3 ? 46 : 64, colored: colored, relativeTo: .largeTitle)
+                ToneHanzi(hanzi: word.s, pinyin: word.p, size: word.s.count > 3 ? 46 : 64, colored: model.state.settings.toneHanzi, relativeTo: .largeTitle)
                     .lineLimit(1)
                     .minimumScaleFactor(0.5)
                 Spacer(minLength: 0)

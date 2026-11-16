@@ -69,6 +69,7 @@ final class AppModel {
             if Task.isCancelled { return }
             await Task.detached(priority: .utility) { SharedStore.save(snapshot) }.value
             self?.reloadWidgets()
+            WatchLink.shared.update()
         }
     }
 
@@ -80,6 +81,7 @@ final class AppModel {
         state.updated = Date()
         SharedStore.save(state)
         WidgetCenter.shared.reloadAllTimelines()
+        WatchLink.shared.update()
     }
 
     private func reloadWidgets() {
@@ -231,6 +233,23 @@ final class AppModel {
     func markKnown(_ wordID: Int) {
         state.markKnown(wordID, today: today, fsrs: fsrs)
         save()
+    }
+
+    /// Applies "I know it" taps and reviews made on the Apple Watch.
+    func applyFromWatch(known: [Int], reviews: [[Int]]) {
+        var changed = false
+        for id in known where state.cards[id]?.mastered != true {
+            state.markKnown(id, today: today, fsrs: fsrs)
+            changed = true
+        }
+        for r in reviews where r.count >= 2 {
+            // Only count a review if the word is still due: the same card may already have
+            // been reviewed on the phone.
+            guard let card = state.cards[r[0]], card.due <= today, let grade = Grade(rawValue: r[1]) else { continue }
+            record(r[0], grade: grade)
+            changed = true
+        }
+        if changed { save() }
     }
 
     func forget(_ wordID: Int) {

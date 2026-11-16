@@ -5,7 +5,7 @@
 // numbers only), for example app.inkstone.maria2026, and build again.
 INKSTONE_BUNDLE_PREFIX = app.inkstone.hanzi7q4k
 
-// The shared folder the app and its widgets both read. It does not need to match the
-// line above. If you change it, change it in Inkstone.entitlements and
-// InkstoneWidget.entitlements too.
+// The shared folder the app and its widgets both read (the watch has its own copy).
+// It does not need to match the line above. If you change it, change it in all four
+// .entitlements files in this folder too.
 INKSTONE_APP_GROUP = group.app.inkstone.hanzi7q4k

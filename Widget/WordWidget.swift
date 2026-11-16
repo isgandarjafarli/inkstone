@@ -48,7 +48,8 @@ struct WordProvider: AppIntentTimelineProvider {
             let lv = w.levels[key] ?? w.levels.values.min()
             return WordEntry(date: date, word: w, level: lv.map(Syllabus.levelName) ?? "",
                              showPinyin: config.showPinyin, showMeaning: config.showMeaning,
-                             toneColors: state.settings.toneColors, due: shownDue, newLeft: newLeft, streak: streak)
+                             toneColors: state.settings.toneColors, due: shownDue, newLeft: newLeft, streak: streak,
+                             toneHanzi: state.settings.toneHanzi)
         }
 
         let minutes = config.rotation.minutes

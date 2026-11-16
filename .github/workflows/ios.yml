@@ -66,6 +66,11 @@ jobs:
         if: success()
         run: scripts/screenshots.sh "${{ steps.sim.outputs.udid }}" build/sim/Build/Products/Debug-iphonesimulator/Inkstone.app screenshots
 
+      - name: Watch screenshots
+        if: success()
+        continue-on-error: true
+        run: scripts/watch-screenshots.sh build/sim/Build/Products/Debug-watchsimulator/InkstoneWatch.app screenshots 2>&1 | tee watch-shots.log
+
       - name: Upload screenshots
         if: always()
         uses: actions/upload-artifact@v4
@@ -101,6 +106,9 @@ jobs:
             echo "run: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
             echo "xcode: $(xcodebuild -version | head -1)"
             echo "tests: $(grep -c "passed (" build-sim.log 2>/dev/null || echo 0) passed, $(grep -c "failed (" build-sim.log 2>/dev/null || echo 0) failed"
+            echo "watch app built: $([ -d build/sim/Build/Products/Debug-watchsimulator/InkstoneWatch.app ] && echo yes || echo no)"
+            echo "screenshots: $(ls screenshots 2>/dev/null | wc -l | tr -d ' ')"
+            grep -h "failed (" build-sim.log 2>/dev/null | head -20 || true"
             grep -h "error:" build-sim.log build-device.log 2>/dev/null | sort -u | head -80 || true
           } > /tmp/results/SUMMARY.txt
           cd /tmp/results

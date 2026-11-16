@@ -40,6 +40,7 @@ struct SettingsView: View {
 
                 Section("Practice") {
                     Toggle("Colour pinyin by tone", isOn: $model.settings.toneColors)
+                    Toggle("Colour characters by tone", isOn: $model.settings.toneHanzi)
                     Toggle("Show pinyin before answering", isOn: $model.settings.showPinyinFirst)
                     Toggle("Handwriting questions", isOn: $model.settings.writingPractice)
                     Toggle("Listening questions", isOn: $model.settings.listeningQuiz)

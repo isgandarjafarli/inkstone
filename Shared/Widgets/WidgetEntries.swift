@@ -12,6 +12,8 @@ struct WordEntry: TimelineEntry {
     let due: Int
     let newLeft: Int
     let streak: Int
+    /// Colour the characters by tone too (home screen and StandBy only).
+    var toneHanzi: Bool = true
 
     var url: URL { URL(string: "inkstone://word/\(word.id)")! }
 

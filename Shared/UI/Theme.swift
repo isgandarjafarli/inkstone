@@ -1,5 +1,7 @@
 import SwiftUI
+#if canImport(CoreText)
 import CoreText
+#endif
 
 /// Paper-and-ink palette. One cinnabar accent (the seal), tone colours, everything else neutral.
 enum Ink {
@@ -42,6 +44,7 @@ enum Ink {
 
 enum FontRegistry {
     private static let once: Void = {
+        #if canImport(CoreText)
         let bundles = [Bundle.main] + Bundle.allBundles
         for b in bundles {
             if let url = b.url(forResource: "LXGWWenKai-Inkstone", withExtension: "ttf") {
@@ -49,20 +52,50 @@ enum FontRegistry {
                 break
             }
         }
+        #endif
     }()
 
     static func ensure() { _ = once }
 }
 
 extension Color {
+    init(hex v: UInt32) {
+        self.init(red: Double((v >> 16) & 0xFF) / 255, green: Double((v >> 8) & 0xFF) / 255, blue: Double(v & 0xFF) / 255)
+    }
+
     init(light: UInt32, dark: UInt32) {
+        #if os(watchOS)
+        // The watch is always dark.
+        self.init(hex: dark)
+        #else
         self.init(uiColor: UIColor { trait in
             let v = trait.userInterfaceStyle == .dark ? dark : light
             return UIColor(red: CGFloat((v >> 16) & 0xFF) / 255,
                            green: CGFloat((v >> 8) & 0xFF) / 255,
                            blue: CGFloat(v & 0xFF) / 255, alpha: 1)
         })
+        #endif
     }
+}
+
+/// Characters as one Text, each in its syllable's tone colour (or `base` when colouring is off
+/// or the pinyin does not line up with the characters).
+func toneText(_ hanzi: String, pinyin: String, colored: Bool, base: Color = Ink.ink) -> Text {
+    let chars = Array(hanzi)
+    let syl = Pinyin.syllables(pinyin)
+    let canColor = colored && chars.count == syl.count
+    return chars.enumerated().reduce(Text("")) { acc, item in
+        let color = canColor ? Ink.tone(Pinyin.tone(of: syl[item.offset])) : base
+        return acc + Text(String(item.element)).foregroundColor(color)
+    }
+}
+
+/// The tone colour of each character of a word, or nil where it cannot be told.
+func toneColorList(_ hanzi: String, pinyin: String) -> [Color?] {
+    let chars = Array(hanzi)
+    let syl = Pinyin.syllables(pinyin)
+    guard chars.count == syl.count else { return chars.map { _ in nil } }
+    return syl.map { Ink.tone(Pinyin.tone(of: $0)) }
 }
 
 /// Pinyin with each syllable coloured by tone. A word's syllables are written together
@@ -96,15 +129,8 @@ struct ToneHanzi: View {
     var relativeTo: Font.TextStyle = .title
 
     var body: some View {
-        let chars = Array(hanzi)
-        let syl = Pinyin.syllables(pinyin)
-        let canColor = colored && chars.count == syl.count
-        chars.enumerated().reduce(Text("")) { acc, item in
-            let (i, ch) = item
-            let color = canColor ? Ink.tone(Pinyin.tone(of: syl[i])) : Ink.ink
-            return acc + Text(String(ch)).foregroundColor(color)
-        }
-        .font(Ink.hanzi(size, relativeTo: relativeTo))
+        toneText(hanzi, pinyin: pinyin, colored: colored)
+            .font(Ink.hanzi(size, relativeTo: relativeTo))
     }
 }
 

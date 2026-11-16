@@ -225,6 +225,8 @@ struct UserSettings: Codable, Hashable, Sendable {
     var showPinyinFirst: Bool = false
     var showTraditional: Bool = false
     var toneColors: Bool = true
+    /// Colour the characters themselves by tone, not just the pinyin.
+    var toneHanzi: Bool = true
     var writingPractice: Bool = true
     var listeningQuiz: Bool = true
     var speechRate: Double = 0.42
@@ -253,6 +255,40 @@ struct UserState: Codable, Sendable {
     var updated: Date = Date()
 
     var savedIDs: Set<Int> { Set(lists.first?.wordIDs ?? []) }
+}
+
+// Progress files must survive app updates that add new settings or fields, so missing keys
+// fall back to their defaults instead of failing the whole decode.
+extension UserSettings {
+    init(from decoder: Decoder) throws {
+        self.init()
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        func read<T: Decodable>(_ key: CodingKeys, _ value: inout T) {
+            if let v = try? c.decodeIfPresent(T.self, forKey: key) { value = v }
+        }
+        read(.syllabus, &syllabus); read(.level, &level); read(.newPerDay, &newPerDay)
+        read(.reviewCap, &reviewCap); read(.topics, &topics); read(.showPinyinFirst, &showPinyinFirst)
+        read(.showTraditional, &showTraditional); read(.toneColors, &toneColors); read(.toneHanzi, &toneHanzi)
+        read(.writingPractice, &writingPractice); read(.listeningQuiz, &listeningQuiz)
+        read(.speechRate, &speechRate); read(.reminderOn, &reminderOn); read(.reminderHour, &reminderHour)
+        read(.reminderMinute, &reminderMinute); read(.haptics, &haptics); read(.retention, &retention)
+    }
+}
+
+extension UserState {
+    init(from decoder: Decoder) throws {
+        self.init()
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        func read<T: Decodable>(_ key: CodingKeys, _ value: inout T) {
+            if let v = try? c.decodeIfPresent(T.self, forKey: key) { value = v }
+        }
+        read(.version, &version); read(.onboarded, &onboarded); read(.settings, &settings)
+        // Cards are the progress itself: a damaged cards table should fail loudly (so the backup is
+        // tried) rather than silently load as empty.
+        cards = try c.decodeIfPresent([Int: CardState].self, forKey: .cards) ?? [:]
+        read(.log, &log); read(.lists, &lists); read(.plan, &plan)
+        read(.widgetOffset, &widgetOffset); read(.updated, &updated)
+    }
 }
 
 // MARK: - Helpers

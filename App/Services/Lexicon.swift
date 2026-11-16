@@ -1,19 +1,5 @@
 import Foundation
 
-/// Stroke outlines and medians for one character (Make Me a Hanzi data, 1024-unit box, y up, baseline at 900).
-struct StrokeData: Codable, Sendable {
-    /// SVG path strings, one per stroke.
-    let s: [String]
-    /// Median polylines, one per stroke, as [[x, y]] points.
-    let m: [[[Double]]]
-    /// Indices of strokes that belong to the radical.
-    let r: [Int]
-
-    var strokes: [String] { s }
-    var medians: [[[Double]]] { m }
-    var radicalStrokes: Set<Int> { Set(r) }
-}
-
 enum LexiconError: Error { case missing(String) }
 
 /// The bundled dictionary: words, example sentences, characters and stroke data.
@@ -28,10 +14,7 @@ final class Lexicon: @unchecked Sendable {
     private(set) var chars: [String: CharInfo] = [:]
     private(set) var isLoaded = false
 
-    private var strokeIndex: [String: [Int]] = [:]
-    private var strokeDataStart = 0
-    private var strokeURL: URL?
-    private var strokeCache: [String: StrokeData] = [:]
+    private var strokePack: StrokePack?
     private var charToWords: [String: [Int]] = [:]
     /// Toneless, spaceless pinyin per word index, for fast search.
     private var plainPinyin: [String] = []
@@ -49,15 +32,7 @@ final class Lexicon: @unchecked Sendable {
         let sents = try dec.decode([Sentence].self, from: Data(contentsOf: url("sentences", "json")))
         let ch = try dec.decode([String: CharInfo].self, from: Data(contentsOf: url("chars", "json")))
 
-        // stroke pack: 4-byte little-endian index length, JSON index, then the blobs
-        let packURL = try url("strokes", "pack")
-        let handle = try FileHandle(forReadingFrom: packURL)
-        defer { try? handle.close() }
-        let lenData = handle.readData(ofLength: 4)
-        guard lenData.count == 4 else { throw LexiconError.missing("strokes.pack header") }
-        let indexLength = lenData.withUnsafeBytes { Int(UInt32(littleEndian: $0.loadUnaligned(as: UInt32.self))) }
-        let indexData = handle.readData(ofLength: indexLength)
-        let index = try dec.decode([String: [Int]].self, from: indexData)
+        let pack = try StrokePack(url: url("strokes", "pack"))
 
         var byID: [Int: Word] = [:]
         var byHanzi: [String: Word] = [:]
@@ -78,9 +53,7 @@ final class Lexicon: @unchecked Sendable {
         self.topics = file.topics.compactMap { $0.count == 2 ? Topic(id: $0[0], title: $0[1]) : nil }
         self.sentences = sents
         self.chars = ch
-        self.strokeIndex = index
-        self.strokeDataStart = 4 + indexLength
-        self.strokeURL = packURL
+        self.strokePack = pack
         self.charToWords = c2w
         self.plainPinyin = file.words.map { Pinyin.plain($0.p) }
         self.numberedPinyin = file.words.map { Pinyin.numbered($0.p).replacingOccurrences(of: " ", with: "").lowercased() }
@@ -117,22 +90,7 @@ final class Lexicon: @unchecked Sendable {
     }
 
     func strokes(for c: String) -> StrokeData? {
-        guard let scalar = c.unicodeScalars.first else { return nil }
-        let key = String(scalar.value, radix: 16)
-        lock.lock(); defer { lock.unlock() }
-        if let cached = strokeCache[key] { return cached }
-        guard let url = strokeURL, let entry = strokeIndex[key], entry.count == 2,
-              let handle = try? FileHandle(forReadingFrom: url) else { return nil }
-        defer { try? handle.close() }
-        do {
-            try handle.seek(toOffset: UInt64(strokeDataStart + entry[0]))
-            let data = handle.readData(ofLength: entry[1])
-            let sd = try JSONDecoder().decode(StrokeData.self, from: data)
-            strokeCache[key] = sd
-            return sd
-        } catch {
-            return nil
-        }
+        strokePack?.strokes(for: c)
     }
 
     /// Search by characters, pinyin (with or without tones, with or without spaces) or English.
