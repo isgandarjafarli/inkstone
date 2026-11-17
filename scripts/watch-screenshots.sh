@@ -39,9 +39,22 @@ xcrun simctl boot "$UDID" 2>/dev/null || true
 xcrun simctl bootstatus "$UDID" -b
 xcrun simctl install "$UDID" "$APP"
 
+# The watch simulator sometimes refuses a relaunch ("Scene update failed"), so each screen
+# gets a few tries and one failure does not stop the others.
 for name in watch-home watch-carousel watch-review watch-write watch-face watch-settings; do
-  xcrun simctl launch --terminate-running-process "$UDID" "$BUNDLE" -screenshot "$name" >/dev/null
-  sleep 8
-  xcrun simctl io "$UDID" screenshot --type=png "$OUT/$name.png" >/dev/null 2>&1 && echo "shot $name"
+  ok=no
+  for attempt in 1 2 3; do
+    xcrun simctl terminate "$UDID" "$BUNDLE" >/dev/null 2>&1 || true
+    sleep 2
+    if xcrun simctl launch "$UDID" "$BUNDLE" -screenshot "$name" >/dev/null 2>&1; then
+      sleep 8
+      if xcrun simctl io "$UDID" screenshot --type=png "$OUT/$name.png" >/dev/null 2>&1; then
+        echo "shot $name"; ok=yes; break
+      fi
+    fi
+    echo "retrying $name ($attempt)"
+    sleep 5
+  done
+  [ "$ok" = yes ] || echo "could not shoot $name"
 done
 xcrun simctl terminate "$UDID" "$BUNDLE" || true

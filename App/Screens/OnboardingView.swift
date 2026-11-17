@@ -52,13 +52,32 @@ struct OnboardingView: View {
     // MARK: steps
 
     private var welcome: some View {
+        VStack(spacing: 14) {
+            // Centred when it fits; scrolls on small phones or with large text, never cut off.
+            ViewThatFits(in: .vertical) {
+                VStack(spacing: 0) {
+                    Spacer(minLength: 0)
+                    welcomeContent
+                    Spacer(minLength: 0)
+                }
+                ScrollView {
+                    welcomeContent.padding(.vertical, 12)
+                }
+            }
+            Button("Get started") { next() }.buttonStyle(InkButtonStyle())
+            Text("Free, offline, no account.").font(.footnote).foregroundStyle(Ink.ink3)
+        }
+        .padding(24)
+    }
+
+    private var welcomeContent: some View {
         VStack(spacing: 26) {
-            Spacer()
             SealMark(size: 96)
             VStack(spacing: 10) {
                 Text("Inkstone").font(.largeTitle.bold())
                 Text("Learn Chinese one word a day, with the word waiting on your lock screen.")
                     .font(.title3).foregroundStyle(Ink.ink2).multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
             }
             VStack(alignment: .leading, spacing: 16) {
                 feature("lock.iphone", "Words on your lock screen", "A new HSK word whenever you check the time.")
@@ -67,11 +86,8 @@ struct OnboardingView: View {
                 feature("text.quote", "Real sentences, tap any word", "Thousands of example sentences with pinyin.")
             }
             .padding(.horizontal, 8)
-            Spacer()
-            Button("Get started") { next() }.buttonStyle(InkButtonStyle())
-            Text("Free, offline, no account.").font(.footnote).foregroundStyle(Ink.ink3)
         }
-        .padding(24)
+        .frame(maxWidth: .infinity)
     }
 
     private func feature(_ symbol: String, _ title: String, _ detail: String) -> some View {

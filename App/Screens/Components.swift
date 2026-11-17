@@ -93,6 +93,7 @@ struct SentenceView: View {
                             tokenView(tok)
                         }
                     }
+                    .fixedSize()
                 }
             }
             if showEnglish {
