@@ -2,7 +2,12 @@
 
 // The name under the icon, on widgets and on the watch. Change it here only.
 APP_DISPLAY_NAME = Inkstone
-//
+
+// The version people see on the App Store, and the build number. Raise the build
+// number by one before every upload to App Store Connect; it must always go up.
+MARKETING_VERSION = 1.0
+CURRENT_PROJECT_VERSION = 1
+
 // Apple needs every app on a phone to have its own ID. If Xcode says the ID is
 // already taken, change the last word below to anything else (letters and
 // numbers only), for example app.inkstone.maria2026, and build again.
