@@ -276,26 +276,10 @@ The Word complication also works in the Smart Stack: turn the Digital Crown from
 
 ## How it works
 
-```mermaid
-flowchart LR
-  subgraph phone["📱 iPhone"]
-    app["Inkstone app"]
-    store[("Shared progress<br/>App Group")]
-    widgets["Widgets<br/>lock screen · home screen · StandBy"]
-    app -- saves --> store
-    store -- reads --> widgets
-    widgets -- "✓ and Next buttons" --> store
-  end
-  subgraph watch["⌚ Apple Watch"]
-    wapp["Watch app"]
-    feed[("Today's words")]
-    comp["Complications"]
-    wapp -- saves --> feed
-    feed -- reads --> comp
-  end
-  app -- "today's words and reviews due" --> wapp
-  wapp -- "answers and known words" --> app
-```
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/diagram-dark.png">
+  <img src="docs/images/diagram-light.png" width="900" alt="How Inkstone shares data: on the iPhone, the app saves progress to a shared file that the widgets read, and the widget buttons write back to it. The iPhone sends the watch today's words and reviews due, and the watch sends back answers and words you know. On the watch, the app saves today's words and the complications read them.">
+</picture>
 
 - **One source of truth.** Your progress is a single file in an App Group that the app and its widgets share. Widget buttons change it directly, so you can mark a word known without opening the app.
 - **Spaced repetition.** Each word has a stability and a difficulty. FSRS-5 uses them to pick the day it comes back, aiming for the memory target you set (90% by default). A new study day starts at 4 a.m., so late-night study counts for the day before.
