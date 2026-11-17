@@ -105,10 +105,10 @@ jobs:
             echo "commit: $GITHUB_SHA"
             echo "run: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
             echo "xcode: $(xcodebuild -version | head -1)"
-            echo "tests: $(grep -c "passed (" build-sim.log 2>/dev/null || echo 0) passed, $(grep -c "failed (" build-sim.log 2>/dev/null || echo 0) failed"
+            echo "tests: $(cat build-sim.log 2>/dev/null | grep -c "passed (") passed, $(cat build-sim.log 2>/dev/null | grep -c "failed (") failed"
             echo "watch app built: $([ -d build/sim/Build/Products/Debug-watchsimulator/InkstoneWatch.app ] && echo yes || echo no)"
             echo "screenshots: $(ls screenshots 2>/dev/null | wc -l | tr -d ' ')"
-            grep -h "failed (" build-sim.log 2>/dev/null | head -20 || true"
+            grep -h "failed (" build-sim.log 2>/dev/null | head -20 || true
             grep -h "error:" build-sim.log build-device.log 2>/dev/null | sort -u | head -80 || true
           } > /tmp/results/SUMMARY.txt
           cd /tmp/results

@@ -153,7 +153,12 @@ struct TodayView: View {
     }
 
     private func checkWidgets() async {
-        let configs = (try? await WidgetCenter.shared.currentConfigurations()) ?? []
+        // The async form needs iOS 18, so wrap the completion handler for iOS 17.
+        let configs: [WidgetInfo] = await withCheckedContinuation { done in
+            WidgetCenter.shared.getCurrentConfigurations { result in
+                done.resume(returning: (try? result.get()) ?? [])
+            }
+        }
         let lock = configs.contains { [.accessoryRectangular, .accessoryInline, .accessoryCircular].contains($0.family) }
         hasLockWidget = lock
     }
