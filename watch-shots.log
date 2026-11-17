@@ -1,0 +1,68 @@
+    Apple Watch Series 11 (46mm) (B72BD753-B0E5-424B-A1F7-0AABCCDE44D2) (Shutdown) 
+Monitoring boot status for Apple Watch Series 11 (46mm) (B72BD753-B0E5-424B-A1F7-0AABCCDE44D2).
+[2026-11-17 17:56:49 +0000] Status=4, isTerminal=NO, Elapsed=01:19.
+	Waiting on System App
+
+[2026-11-17 17:56:51 +0000] Status=4, isTerminal=NO, Elapsed=01:21.
+	Waiting on System App
+
+[2026-11-17 17:56:51 +0000] Status=4, isTerminal=NO, Elapsed=01:22.
+	Waiting on System App
+
+[2026-11-17 17:56:52 +0000] Status=4, isTerminal=NO, Elapsed=01:23.
+	Waiting on System App
+
+[2026-11-17 17:56:54 +0000] Status=4, isTerminal=NO, Elapsed=01:24.
+	Waiting on System App
+
+[2026-11-17 17:56:55 +0000] Status=4, isTerminal=NO, Elapsed=01:25.
+	Waiting on System App
+
+[2026-11-17 17:56:56 +0000] Status=4, isTerminal=NO, Elapsed=01:27.
+	Waiting on System App
+
+[2026-11-17 17:56:57 +0000] Status=4, isTerminal=NO, Elapsed=01:27.
+	Waiting on System App
+
+[2026-11-17 17:56:57 +0000] Status=4, isTerminal=NO, Elapsed=01:28.
+	Waiting on System App
+
+[2026-11-17 17:56:58 +0000] Status=4, isTerminal=NO, Elapsed=01:28.
+	Waiting on System App
+
+[2026-11-17 17:56:59 +0000] Status=4, isTerminal=NO, Elapsed=01:30.
+	Waiting on System App
+
+[2026-11-17 17:57:01 +0000] Status=4, isTerminal=NO, Elapsed=01:31.
+	Waiting on System App
+
+[2026-11-17 17:57:01 +0000] Status=4, isTerminal=NO, Elapsed=01:31.
+	Waiting on System App
+
+[2026-11-17 17:57:02 +0000] Status=4, isTerminal=NO, Elapsed=01:33.
+	Waiting on System App
+
+[2026-11-17 17:57:03 +0000] Status=4, isTerminal=NO, Elapsed=01:33.
+	Waiting on System App
+
+[2026-11-17 17:57:05 +0000] Status=4, isTerminal=NO, Elapsed=01:35.
+	Waiting on System App
+
+[2026-11-17 17:57:05 +0000] Status=4, isTerminal=NO, Elapsed=01:36.
+	Waiting on System App
+
+[2026-11-17 17:57:07 +0000] Status=4, isTerminal=NO, Elapsed=01:38.
+	Waiting on System App
+
+[2026-11-17 17:57:08 +0000] Status=4, isTerminal=NO, Elapsed=01:38.
+	Waiting on System App
+
+[2026-11-17 17:57:09 +0000] Status=4294967295, isTerminal=YES, Elapsed=01:39.
+	Finished
+
+shot watch-home
+shot watch-carousel
+shot watch-review
+shot watch-write
+shot watch-face
+shot watch-settings
