@@ -4,6 +4,12 @@ on:
   push:
     branches-ignore: [ci-results]
   workflow_dispatch:
+    inputs:
+      runner:
+        description: "Mac runner (macos-15 is Apple silicon; macos-15-intel helps when those are busy)"
+        default: macos-15
+        type: choice
+        options: [macos-15, macos-15-intel, macos-26]
 
 concurrency:
   group: ios-${{ github.ref }}
@@ -14,7 +20,7 @@ permissions:
 
 jobs:
   build:
-    runs-on: macos-15
+    runs-on: ${{ inputs.runner || 'macos-15' }}
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
