@@ -34,13 +34,13 @@ struct WatchHome: View {
                     Label("Settings", systemImage: "gearshape")
                 }
                 if model.loaded && !model.hasPhoneData {
-                    Text("Open Inkstone on your iPhone once to send your words here. Until then the watch shows HSK 1 words.")
+                    Text("Open \(AppInfo.name) on your iPhone once to send your words here. Until then the watch shows HSK 1 words.")
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                         .listRowBackground(Color.clear)
                 }
             }
-            .navigationTitle("Inkstone")
+            .navigationTitle(AppInfo.name)
             .navigationDestination(isPresented: $showCarousel) {
                 CarouselView(startID: carouselStart)
             }

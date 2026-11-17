@@ -74,7 +74,7 @@ struct OnboardingView: View {
         VStack(spacing: 26) {
             SealMark(size: 96)
             VStack(spacing: 10) {
-                Text("Inkstone").font(.largeTitle.bold())
+                Text(AppInfo.name).font(.largeTitle.bold())
                 Text("Learn Chinese one word a day, with the word waiting on your lock screen.")
                     .font(.title3).foregroundStyle(Ink.ink2).multilineTextAlignment(.center)
                     .fixedSize(horizontal: false, vertical: true)

@@ -31,7 +31,7 @@ final class WatchLink: NSObject {
             lastSent = data
         } catch {
             #if DEBUG
-            print("Inkstone: could not update the watch: \(error)")
+            print("\(AppInfo.name): could not update the watch: \(error)")
             #endif
         }
     }

@@ -44,7 +44,7 @@ enum SharedStore {
             try data.write(to: stateURL, options: [.atomic])
         } catch {
             #if DEBUG
-            print("Inkstone: could not save progress: \(error)")
+            print("\(AppInfo.name): could not save progress: \(error)")
             #endif
         }
     }

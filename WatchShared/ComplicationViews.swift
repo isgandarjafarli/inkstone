@@ -173,7 +173,7 @@ struct WatchTodayView: View {
             VStack(alignment: .leading, spacing: 1) {
                 HStack(spacing: 5) {
                     Text("砚").font(Ink.hanziFixed(13)).widgetAccentable()
-                    Text("Inkstone").font(.system(size: 13, weight: .semibold))
+                    Text(AppInfo.name).font(.system(size: 13, weight: .semibold))
                 }
                 Text(entry.due > 0 ? "\(entry.due) to review" : "Reviews done")
                     .font(.system(size: 17, weight: .bold))

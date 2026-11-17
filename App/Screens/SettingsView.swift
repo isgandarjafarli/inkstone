@@ -80,7 +80,7 @@ struct SettingsView: View {
                     Text("Reminder")
                 } footer: {
                     if notificationsDenied {
-                        Text("Notifications are turned off for Inkstone. Turn them on in the iPhone Settings app.")
+                        Text("Notifications are turned off for \(AppInfo.name). Turn them on in the iPhone Settings app.")
                     } else {
                         Text("Each reminder names a word from your plan for that day.")
                     }
@@ -97,7 +97,7 @@ struct SettingsView: View {
                 }
 
                 Section("Your data") {
-                    ShareLink(item: ProgressExport(data: model.exportData()), preview: SharePreview("Inkstone progress")) {
+                    ShareLink(item: ProgressExport(data: model.exportData()), preview: SharePreview("\(AppInfo.name) progress")) {
                         Label("Export progress", systemImage: "square.and.arrow.up")
                     }
                     Button { importing = true } label: { Label("Import progress", systemImage: "square.and.arrow.down") }
@@ -126,7 +126,7 @@ struct SettingsView: View {
                 if let data = try? Data(contentsOf: url), model.importData(data) {
                     importMessage = "Progress imported."
                 } else {
-                    importMessage = "That file is not an Inkstone export."
+                    importMessage = "That file is not a progress export from \(AppInfo.name)."
                 }
             }
             .sheet(isPresented: $showWidgetGuide) { WidgetGuideView() }
@@ -153,7 +153,7 @@ struct ProgressExport: Transferable {
     let data: Data
     static var transferRepresentation: some TransferRepresentation {
         DataRepresentation(exportedContentType: .json) { $0.data }
-            .suggestedFileName("Inkstone-progress.json")
+            .suggestedFileName("\(AppInfo.name)-progress.json")
     }
 }
 
@@ -205,12 +205,12 @@ struct WidgetGuideView: View {
                     GuideStep(n: 1, title: "Lock screen", lines: [
                         "Lock your iPhone, then press and hold an empty part of the lock screen.",
                         "Tap Customize, then Lock Screen.",
-                        "Tap the box under the clock, find Inkstone, and pick the wide widget (word, pinyin and meaning).",
-                        "Want it above the clock too? Tap the date line and choose Inkstone.",
+                        "Tap the box under the clock, find \(AppInfo.name), and pick the wide widget (word, pinyin and meaning).",
+                        "Want it above the clock too? Tap the date line and choose \(AppInfo.name).",
                     ])
                     GuideStep(n: 2, title: "Home screen", lines: [
                         "Press and hold an empty area of the home screen until icons jiggle.",
-                        "Tap Edit, then Add Widget, and search for Inkstone.",
+                        "Tap Edit, then Add Widget, and search for \(AppInfo.name).",
                         "The medium size shows an example sentence and has Next and \"I know it\" buttons.",
                     ])
                     GuideStep(n: 3, title: "Choose what it shows", lines: [
@@ -263,11 +263,16 @@ struct AboutView: View {
                 HStack(spacing: 14) {
                     SealMark(size: 48)
                     VStack(alignment: .leading) {
-                        Text("Inkstone").font(.title3.bold())
-                        Text("Free and offline. No account, no ads, no tracking.").font(.subheadline).foregroundStyle(Ink.ink2)
+                        Text(AppInfo.name).font(.title3.bold())
+                        Text("Works offline. No account, no ads, no tracking.").font(.subheadline).foregroundStyle(Ink.ink2)
+                        Text("Version \(AppInfo.version)").font(.caption).foregroundStyle(Ink.ink3)
                     }
                 }
                 .padding(.vertical, 4)
+            }
+            Section("Help") {
+                Link(destination: AppInfo.supportURL) { Label("Support and questions", systemImage: "questionmark.circle") }
+                Link(destination: AppInfo.privacyURL) { Label("Privacy policy", systemImage: "hand.raised") }
             }
             Section("Data sources") {
                 source("HSK word lists", "complete-hsk-vocabulary by drkameleon, MIT licence", "https://github.com/drkameleon/complete-hsk-vocabulary")

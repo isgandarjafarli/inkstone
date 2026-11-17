@@ -35,7 +35,7 @@ It is a native SwiftUI app for iPhone and Apple Watch. It is free, works offline
 | 🧠 **Reviews** | FSRS-5 spaced repetition, with a memory target you choose |
 | 🎨 **Tone colours** | Each tone has its own colour, on pinyin and on characters |
 | ⌚ **Devices** | iPhone on iOS 17 or newer, Apple Watch on watchOS 10 or newer |
-| 🔒 **Privacy** | Everything stays on your phone. No ads, accounts, tracking or network calls |
+| 🔒 **Privacy** | Everything stays on your phone. No ads, accounts, tracking or network calls. See the [privacy policy](PRIVACY.md) |
 
 ## Screenshots
 
@@ -327,4 +327,4 @@ Inkstone is built on open data and an open font:
 | Chinese font (subset) | [LXGW WenKai](https://github.com/lxgw/LxgwWenKai) | SIL Open Font License 1.1 |
 | Review scheduling | [FSRS-5](https://github.com/open-spaced-repetition) | MIT |
 
-The same list is in [`CREDITS.md`](CREDITS.md) and in the app under **Settings → About and data sources**. Settings opens from the gear on the Progress tab. Inkstone is an independent project and is not affiliated with Daily Hanzi or any other app.
+The same list is in [`CREDITS.md`](CREDITS.md) and in the app under **Settings → About and data sources**. Settings opens from the gear on the Progress tab.

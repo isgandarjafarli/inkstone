@@ -1,4 +1,7 @@
-// Inkstone signing settings.
+// App name and signing settings.
+
+// The name under the icon, on widgets and on the watch. Change it here only.
+APP_DISPLAY_NAME = Inkstone
 //
 // Apple needs every app on a phone to have its own ID. If Xcode says the ID is
 // already taken, change the last word below to anything else (letters and

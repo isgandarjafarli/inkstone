@@ -221,7 +221,7 @@ struct WordWidgetView: View {
         VStack(alignment: .leading, spacing: 0) {
             HStack(spacing: 8) {
                 SealMark(size: 22)
-                Text("Inkstone").font(.caption.weight(.semibold)).foregroundStyle(Ink.ink2)
+                Text(AppInfo.name).font(.caption.weight(.semibold)).foregroundStyle(Ink.ink2)
                 Spacer()
                 if !entry.level.isEmpty { levelTag }
             }
@@ -428,7 +428,7 @@ struct TodayWidgetView: View {
 
     private var rectangular: some View {
         VStack(alignment: .leading, spacing: 1) {
-            Text("Inkstone").font(.system(size: 13, weight: .bold)).widgetAccentable()
+            Text(AppInfo.name).font(.system(size: 13, weight: .bold)).widgetAccentable()
             Text("\(entry.due) to review · \(entry.newLeft) new").font(.system(size: 15, weight: .semibold))
             Text(streakLine).font(.system(size: 13)).foregroundStyle(.secondary)
         }

@@ -11,4 +11,4 @@ Inkstone's code is yours to use and change. The data and font it ships with come
 | Chinese font (subset) | LXGW WenKai by LXGW (github.com/lxgw/LxgwWenKai) | SIL Open Font License 1.1 |
 | Review scheduling | FSRS-5 (github.com/open-spaced-repetition) | MIT |
 
-Inkstone is an independent project. It is not affiliated with Daily Hanzi or any other app.
+Inkstone is an independent project.

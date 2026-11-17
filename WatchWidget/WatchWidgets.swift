@@ -46,7 +46,7 @@ struct WatchWordWidget: Widget {
             WatchWordView(entry: entry)
         }
         .configurationDisplayName("Word")
-        .description("A new word every few minutes. Choose how often in the Inkstone watch app.")
+        .description("A new word every few minutes. Choose how often in the \(AppInfo.name) watch app.")
         .supportedFamilies([.accessoryRectangular, .accessoryCircular, .accessoryCorner, .accessoryInline])
     }
 }
