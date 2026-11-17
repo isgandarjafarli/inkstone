@@ -57,7 +57,12 @@ struct TodayView: View {
         }
     }
 
-    private var heroWord: Word? { model.newRemaining.first ?? model.todayWords.first }
+    /// Today's first new word, skipping particles such as 啊 or 吧, which make a poor headline.
+    private var heroWord: Word? {
+        func isParticle(_ w: Word) -> Bool { w.m.first?.lowercased().contains("particle") ?? false }
+        let pool = model.newRemaining.isEmpty ? model.todayWords : model.newRemaining
+        return pool.first { !isParticle($0) } ?? pool.first
+    }
 
     private var header: some View {
         HStack(alignment: .center) {

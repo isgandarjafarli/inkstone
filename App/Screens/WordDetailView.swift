@@ -268,20 +268,9 @@ struct CharacterDetailView: View {
                         Text(r == 0 ? "Every stroke right." : "Done, with \(r) slip\(r == 1 ? "" : "s").")
                             .font(.headline).foregroundStyle(r == 0 ? Ink.good : Ink.warn)
                     }
-                    HStack(spacing: 10) {
-                        Button {
-                            practicing = false
-                            playToken += 1
-                        } label: { Label("Play strokes", systemImage: "play.fill") }
-                        .buttonStyle(.bordered)
-                        Button {
-                            startPractice(trace: true)
-                        } label: { Label("Trace it", systemImage: "pencil.tip") }
-                        .buttonStyle(.borderedProminent)
-                        Button {
-                            startPractice(trace: false)
-                        } label: { Label("From memory", systemImage: "eye.slash") }
-                        .buttonStyle(.bordered)
+                    ViewThatFits(in: .horizontal) {
+                        strokeButtons(play: "Play", trace: "Trace", memory: "From memory")
+                        strokeButtons(play: "Play", trace: "Trace", memory: "Recall")
                     }
                     .tint(Ink.seal)
                     .font(.subheadline.weight(.semibold))
@@ -346,6 +335,29 @@ struct CharacterDetailView: View {
         .navigationTitle(char)
         .navigationBarTitleDisplayMode(.inline)
         .onAppear { playToken += 1 }
+    }
+
+    private func strokeButtons(play: String, trace: String, memory: String) -> some View {
+        HStack(spacing: 10) {
+            Button {
+                practicing = false
+                playToken += 1
+            } label: { Label(play, systemImage: "play.fill") }
+            .buttonStyle(.bordered)
+            .accessibilityLabel("Play the strokes")
+            Button {
+                startPractice(trace: true)
+            } label: { Label(trace, systemImage: "pencil.tip") }
+            .buttonStyle(.borderedProminent)
+            .accessibilityLabel("Trace it")
+            Button {
+                startPractice(trace: false)
+            } label: { Label(memory, systemImage: "eye.slash") }
+            .buttonStyle(.bordered)
+            .accessibilityLabel("Write it from memory")
+        }
+        .lineLimit(1)
+        .fixedSize()
     }
 
     private func startPractice(trace: Bool) {

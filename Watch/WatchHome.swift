@@ -85,7 +85,6 @@ struct WatchHome: View {
                 .padding(.vertical, 6)
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .listRowBackground(RoundedRectangle(cornerRadius: 18, style: .continuous).fill(Color(hex: 0x3A1E19)))
             .accessibilityLabel("\(w.hanzi), \(Pinyin.joined(w.pinyin)), \(w.meaning). Open words.")
         }
     }
@@ -106,22 +105,23 @@ struct CarouselView: View {
             }
         }
         .tabViewStyle(.verticalPage)
-        .containerBackground(Color(hex: 0x3A1E19).gradient, for: .tabView)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
                     autoPlay.toggle()
                 } label: {
-                    Image(systemName: autoPlay ? "pause.fill" : "play.fill")
+                    BarIcon(systemName: autoPlay ? "pause.fill" : "play.fill")
                 }
+                .barTint()
                 .accessibilityLabel(autoPlay ? "Stop moving on by itself" : "Move on by itself")
             }
             ToolbarItemGroup(placement: .bottomBar) {
                 Button {
                     if let w = current { model.speak(w.hanzi) }
                 } label: {
-                    Image(systemName: "speaker.wave.2.fill")
+                    BarIcon(systemName: "speaker.wave.2.fill")
                 }
+                .barTint()
                 .accessibilityLabel("Say it")
                 Spacer()
                 Button {
@@ -129,9 +129,9 @@ struct CarouselView: View {
                     model.markKnown(w)
                     advance()
                 } label: {
-                    Image(systemName: "checkmark")
+                    BarIcon(systemName: "checkmark")
                 }
-                .tint(Ink.good)
+                .barTint(.barGreen)
                 .accessibilityLabel("I know this word")
             }
         }

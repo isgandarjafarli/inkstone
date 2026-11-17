@@ -87,8 +87,12 @@ struct SentenceView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             FlowLayout(spacing: 2, lineSpacing: 6) {
-                ForEach(Array(sentence.tokens.enumerated()), id: \.offset) { _, tok in
-                    tokenView(tok)
+                ForEach(Array(groups.enumerated()), id: \.offset) { _, group in
+                    HStack(alignment: .bottom, spacing: 0) {
+                        ForEach(Array(group.enumerated()), id: \.offset) { _, tok in
+                            tokenView(tok)
+                        }
+                    }
                 }
             }
             if showEnglish {
@@ -106,6 +110,23 @@ struct SentenceView: View {
         .sheet(item: $tapped) { w in
             WordPeekSheet(word: w)
         }
+    }
+
+    /// Tokens grouped so that closing punctuation stays on the line of the word before it.
+    private var groups: [[SentenceToken]] {
+        let opening: Set<Character> = ["“", "‘", "（", "(", "《", "「", "『", "【", "〈"]
+        var out: [[SentenceToken]] = []
+        for tok in sentence.tokens {
+            let isClosingPunct = !tok.isHan && !tok.text.isEmpty
+                && tok.text.allSatisfy { $0.isPunctuation || $0.isWhitespace }
+                && !tok.text.contains(where: { opening.contains($0) })
+            if isClosingPunct, !out.isEmpty {
+                out[out.count - 1].append(tok)
+            } else {
+                out.append([tok])
+            }
+        }
+        return out
     }
 
     @ViewBuilder
@@ -200,46 +221,46 @@ struct FlowLayout: Layout {
     var spacing: CGFloat = 4
     var lineSpacing: CGFloat = 6
 
+    private struct Line { var items: [(index: Int, size: CGSize, x: CGFloat)] = []; var height: CGFloat = 0 }
+
+    /// Measuring and placing both use this, so they always break lines in the same places.
+    private func lines(maxWidth: CGFloat, subviews: Subviews) -> [Line] {
+        var lines: [Line] = [Line()]
+        var x: CGFloat = 0
+        for (i, v) in subviews.enumerated() {
+            let s = v.sizeThatFits(.unspecified)
+            if x > 0 && x + s.width > maxWidth + 0.5 {
+                lines.append(Line())
+                x = 0
+            }
+            lines[lines.count - 1].items.append((i, s, x))
+            lines[lines.count - 1].height = max(lines[lines.count - 1].height, s.height)
+            x += s.width + spacing
+        }
+        return lines
+    }
+
     func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
         let maxW = proposal.width ?? .infinity
-        var x: CGFloat = 0, y: CGFloat = 0, lineH: CGFloat = 0, widest: CGFloat = 0
-        for v in subviews {
-            let s = v.sizeThatFits(.unspecified)
-            if x > 0 && x + s.width > maxW {
-                y += lineH + lineSpacing
-                x = 0
-                lineH = 0
-            }
-            x += s.width + spacing
-            lineH = max(lineH, s.height)
-            widest = max(widest, x - spacing)
-        }
-        return CGSize(width: min(widest, maxW), height: y + lineH)
+        let ls = lines(maxWidth: maxW, subviews: subviews)
+        let widest = ls.map { l in l.items.last.map { $0.x + $0.size.width } ?? 0 }.max() ?? 0
+        let height = ls.reduce(0) { $0 + $1.height } + lineSpacing * CGFloat(max(ls.count - 1, 0))
+        return CGSize(width: min(widest, maxW), height: height)
     }
 
     func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) {
-        var x = bounds.minX, y = bounds.minY, lineH: CGFloat = 0
-        // bottom-align items on a line so characters share a baseline
-        var line: [(LayoutSubview, CGSize, CGFloat)] = []
-        func flush() {
-            for (v, s, lx) in line {
-                v.place(at: CGPoint(x: lx, y: y + lineH - s.height), proposal: ProposedViewSize(s))
+        // Break with the width we were measured at, not the (possibly narrower) bounds.
+        let maxW = max(proposal.width ?? bounds.width, bounds.width)
+        var y = bounds.minY
+        for line in lines(maxWidth: maxW, subviews: subviews) {
+            // bottom-align items on a line so characters share a baseline
+            for item in line.items {
+                subviews[item.index].place(
+                    at: CGPoint(x: bounds.minX + item.x, y: y + line.height - item.size.height),
+                    proposal: ProposedViewSize(item.size))
             }
-            line.removeAll()
+            y += line.height + lineSpacing
         }
-        for v in subviews {
-            let s = v.sizeThatFits(.unspecified)
-            if x > bounds.minX && x + s.width > bounds.maxX {
-                flush()
-                y += lineH + lineSpacing
-                x = bounds.minX
-                lineH = 0
-            }
-            line.append((v, s, x))
-            x += s.width + spacing
-            lineH = max(lineH, s.height)
-        }
-        flush()
     }
 }
 

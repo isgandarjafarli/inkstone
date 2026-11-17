@@ -40,23 +40,27 @@ struct WriteView: View {
             }
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Button { dismiss() } label: { Image(systemName: "xmark") }
+                    Button { dismiss() } label: { BarIcon(systemName: "xmark") }
+                        .barTint()
                         .accessibilityLabel("Close")
                 }
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button { hintToken += 1 } label: { Image(systemName: "lightbulb") }
+                    Button { hintToken += 1 } label: { BarIcon(systemName: "lightbulb") }
+                        .barTint()
                         .accessibilityLabel("Show the next stroke")
                 }
                 ToolbarItemGroup(placement: .bottomBar) {
-                    Button { trace.toggle() } label: { Image(systemName: trace ? "eye" : "eye.slash") }
+                    Button { trace.toggle() } label: { BarIcon(systemName: trace ? "eye" : "eye.slash") }
+                        .barTint()
                         .accessibilityLabel(trace ? "Hide the outline" : "Show the outline")
                     Spacer()
                     Text(items.isEmpty ? "" : "\(index + 1)/\(items.count)")
                         .font(.caption2)
                         .monospacedDigit()
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color(white: 0.7))
                     Spacer()
-                    Button { next() } label: { Image(systemName: "forward.fill") }
+                    Button { next() } label: { BarIcon(systemName: "forward.fill") }
+                        .barTint()
                         .accessibilityLabel("Next character")
                 }
             }

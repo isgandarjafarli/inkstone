@@ -64,17 +64,17 @@ struct ReviewView: View {
                     Button {
                         answer(w, remembered: false)
                     } label: {
-                        Image(systemName: "xmark")
+                        BarIcon(systemName: "xmark")
                     }
-                    .tint(.red)
+                    .barTint(.red)
                     .accessibilityLabel("Forgot")
                     Spacer()
                     Button {
                         answer(w, remembered: true)
                     } label: {
-                        Image(systemName: "checkmark")
+                        BarIcon(systemName: "checkmark")
                     }
-                    .tint(Ink.good)
+                    .barTint(.barGreen)
                     .accessibilityLabel("Remembered")
                 }
             }

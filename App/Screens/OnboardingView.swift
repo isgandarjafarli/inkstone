@@ -61,7 +61,7 @@ struct OnboardingView: View {
                     .font(.title3).foregroundStyle(Ink.ink2).multilineTextAlignment(.center)
             }
             VStack(alignment: .leading, spacing: 16) {
-                feature("lock.iphone", "Lock screen and home screen widgets", "A new HSK word whenever you check the time.")
+                feature("lock.iphone", "Words on your lock screen", "A new HSK word whenever you check the time.")
                 feature("rectangle.stack", "Reviews that adapt to you", "Words return just before you would forget them.")
                 feature("pencil.tip", "Stroke order and handwriting", "Watch each character drawn, then write it yourself.")
                 feature("text.quote", "Real sentences, tap any word", "Thousands of example sentences with pinyin.")
@@ -79,7 +79,9 @@ struct OnboardingView: View {
             Image(systemName: symbol).font(.title3).foregroundStyle(Ink.seal).frame(width: 30)
             VStack(alignment: .leading, spacing: 2) {
                 Text(title).font(.headline)
+                    .fixedSize(horizontal: false, vertical: true)
                 Text(detail).font(.subheadline).foregroundStyle(Ink.ink2)
+                    .fixedSize(horizontal: false, vertical: true)
             }
         }
     }

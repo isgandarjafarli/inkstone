@@ -289,6 +289,8 @@ struct WordWidgetView: View {
                 Label("Next", systemImage: "arrow.right")
                     .labelStyle(.titleAndIcon)
                     .font(.system(size: 13, weight: .semibold))
+                    .lineLimit(1)
+                    .fixedSize()
                     .padding(.horizontal, 12)
                     .frame(height: 32)
                     .background(Ink.seal, in: Capsule())

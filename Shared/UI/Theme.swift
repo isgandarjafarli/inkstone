@@ -85,7 +85,9 @@ func toneText(_ hanzi: String, pinyin: String, colored: Bool, base: Color = Ink.
     let syl = Pinyin.syllables(pinyin)
     let canColor = colored && chars.count == syl.count
     return chars.enumerated().reduce(Text("")) { acc, item in
-        let color = canColor ? Ink.tone(Pinyin.tone(of: syl[item.offset])) : base
+        // Neutral-tone characters stay in the base colour: grey reads as "disabled" at this size.
+        let tone = canColor ? Pinyin.tone(of: syl[item.offset]) : 0
+        let color = (1...4).contains(tone) ? Ink.tone(tone) : base
         return acc + Text(String(item.element)).foregroundColor(color)
     }
 }
@@ -95,7 +97,10 @@ func toneColorList(_ hanzi: String, pinyin: String) -> [Color?] {
     let chars = Array(hanzi)
     let syl = Pinyin.syllables(pinyin)
     guard chars.count == syl.count else { return chars.map { _ in nil } }
-    return syl.map { Ink.tone(Pinyin.tone(of: $0)) }
+    return syl.map { s -> Color? in
+        let tone = Pinyin.tone(of: s)
+        return (1...4).contains(tone) ? Ink.tone(tone) : nil
+    }
 }
 
 /// Pinyin with each syllable coloured by tone. A word's syllables are written together
